@@ -1,7 +1,4 @@
-from io import BytesIO
-
 import scrapy
-from openpyxl import load_workbook
 
 from metaevents.spiders.qualis.constants import QUALIS_PERIODICOS_MAIN_PAGE_URL
 from metaevents.spiders.qualis.selectors import (
