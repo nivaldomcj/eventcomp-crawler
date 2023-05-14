@@ -91,7 +91,8 @@ ROBOTSTXT_OBEY = True
 
 # https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    "metaevents.pipelines.MongoPipeline": 300,
+    "metaevents.pipelines.DuplicatesPipeline": 100,
+    "metaevents.pipelines.MongoDbPipeline": 200,
 }
 
 # Set log level for all spiders
