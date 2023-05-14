@@ -11,8 +11,8 @@ class SbcEventItemLoader(ItemLoader):
 
     title_in = Compose(parse_sbc_event_title)
 
-    start_at_in = Compose(lambda x: parse_sbc_event_date(x[0]))
+    start_at_in = Compose(lambda v: parse_sbc_event_date(v, False))
 
-    finish_at_in = Compose(lambda x: parse_sbc_event_date(x[1]))
+    finish_at_in = Compose(lambda v: parse_sbc_event_date(v, True))
 
     description_in = Compose(html_to_text)
