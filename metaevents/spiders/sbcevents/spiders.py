@@ -28,6 +28,7 @@ class SbcEventsSpider(scrapy.Spider):
 
     def parse_event(self, response):
         event = SbcEventItemLoader(SbcEventItem(), response)
+        event.add_value('id', int(response.url.split('/')[-2]))
         event.add_css('title', EVENT_PAGE_TITLE_SELECTOR)
         event.add_css('title', EVENT_CALENDAR_TITLE_SELECTOR)
         event.add_css('start_at', EVENT_CALENDAR_DATES_SELECTOR)
