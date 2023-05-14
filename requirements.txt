@@ -9,6 +9,7 @@ constantly==15.1.0
 cryptography==40.0.2
 cssselect==1.2.0
 dateparser==1.1.8
+dnspython==2.3.0
 et-xmlfile==1.1.0
 filelock==3.12.0
 hyperlink==21.0.0
@@ -26,8 +27,10 @@ pyasn1-modules==0.3.0
 pycodestyle==2.10.0
 pycparser==2.21
 PyDispatcher==2.0.7
+pymongo==4.3.3
 pyOpenSSL==23.1.1
 python-dateutil==2.8.2
+python-dotenv==1.0.0
 pytz==2023.3
 pytz-deprecation-shim==0.1.0.post0
 queuelib==1.6.2
