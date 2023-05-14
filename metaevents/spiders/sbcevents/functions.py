@@ -4,7 +4,7 @@ import dateparser
 def parse_sbc_event_title(titles_found):
     for title in titles_found:
         if title is not None:
-            return title
+            return title.strip()
     return ''
 
 
