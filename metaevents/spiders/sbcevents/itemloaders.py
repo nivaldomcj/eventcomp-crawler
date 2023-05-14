@@ -1,8 +1,8 @@
 from itemloaders.processors import Compose, TakeFirst
 from scrapy.loader import ItemLoader
 
-from metaevents.spiders.sbcevents.functions import (parse_sbc_event_title,
-                                                    parse_sbc_event_date)
+from metaevents.spiders.sbcevents.functions import (parse_sbc_event_date,
+                                                    parse_sbc_event_title)
 
 
 class SbcEventItemLoader(ItemLoader):
