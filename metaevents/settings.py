@@ -59,7 +59,6 @@ HTTPCACHE_ENABLED = True
 
 # https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    "metaevents.pipelines.DuplicatesPipeline": 100,
     "metaevents.pipelines.MongoDbPipeline": 200,
 }
 

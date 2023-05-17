@@ -1,6 +1,5 @@
 import pymongo
 from itemadapter import ItemAdapter
-from scrapy.exceptions import DropItem
 
 
 class MongoDbPipeline:
@@ -16,33 +15,31 @@ class MongoDbPipeline:
             mongo_database=str(crawler.settings.get("MONGODB_DATABASE")),
         )
 
-    def open_spider(self, spider):
+    def __connect(self, collection_name):
         self.client = pymongo.MongoClient(self.mongo_uri)
         self.database = self.client[self.mongo_database]
-        self.database.drop_collection(spider.name)
-        self.collection = self.database[spider.name]
+        self.collection = self.database[collection_name]
+
+    def __set_seen_ids(self, spider):
+        seen_ids = set()
+        for document in self.collection.find({}, {'_id': 0, 'id': 1}):
+            seen_ids.add(document['id'])
+        if hasattr(spider, 'seen_event_ids'):
+            spider.seen_event_ids = seen_ids
+
+    def __continue_crawling(self, spider, _continue):
+        if _continue:
+            self.__set_seen_ids(spider)
+        else:
+            self.database.drop_collection(spider.name)
+
+    def open_spider(self, spider):
+        self.__connect(spider.name)
+        self.__continue_crawling(spider, False)
 
     def close_spider(self, spider):
         self.client.close()
 
     def process_item(self, item, spider):
         self.collection.insert_one(ItemAdapter(item).asdict())
-        return item
-
-
-class DuplicatesPipeline:
-
-    def __init__(self):
-        self.ids_seen = set()
-
-    def process_item(self, item, spider):
-        adapter = ItemAdapter(item)
-        item_id = adapter["id"] if hasattr(adapter, 'id') else None
-
-        if item_id is not None:
-            if item_id in self.ids_seen:
-                raise DropItem(f"Duplicate item found: {item!r}")
-            else:
-                self.ids_seen.add(item_id)
-
         return item
