@@ -60,7 +60,7 @@ class ResurchifySpider(scrapy.Spider):
         if next_page is not None:
             yield response.follow(url=next_page, callback=self.parse_category)
         else:
-            logging.info('🏁 {}'.format(get_category_name(response.url)))
+            logging.info('🏁 {} (done)'.format(get_category_name(response.url)))
 
     def parse_event(self, response):
         event = ResurchifyEventItemLoader(ResurchifyEventItem(), response)
@@ -78,7 +78,7 @@ class ResurchifySpider(scrapy.Spider):
         metadata = {}
         for selector in response.css(EVENT_METADATA_SELECTOR):
             field_title = parse_field_title(selector.css('th > b::text').get())
-            if field_title is not None or field_title != 'event_date':
+            if field_title is not None and field_title != 'event_date':
                 field_value = parse_field_value(selector.css('td::text').get())
                 metadata[field_title] = field_value
         event.add_value('metadata', metadata)
