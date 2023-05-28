@@ -6,8 +6,7 @@ from metaevents.spiders.resurchify.constants import BASE_URL
 from metaevents.spiders.resurchify.itemloaders import ResurchifyEventItemLoader
 from metaevents.spiders.resurchify.items import ResurchifyEventItem
 from metaevents.spiders.resurchify.selectors import *
-from metaevents.spiders.resurchify.utils import (parse_field_title,
-                                                 parse_field_value)
+from metaevents.utils import parse_field_title, parse_field_value
 
 
 class ResurchifySpider(scrapy.Spider):
