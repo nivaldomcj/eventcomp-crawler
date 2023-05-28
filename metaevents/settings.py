@@ -21,6 +21,9 @@ NEWSPIDER_MODULE = "metaevents.spiders"
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
 
+# Whether to enable the cookies middleware
+COOKIES_ENABLED = False
+
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 CONCURRENT_REQUESTS = 32
 
