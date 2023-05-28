@@ -26,7 +26,7 @@ CONCURRENT_REQUESTS = 32
 
 # Configure a delay for requests for the same website (default: 0)
 # See https://docs.scrapy.org/en/latest/topics/settings.html#download-delay
-DOWNLOAD_DELAY = 2
+DOWNLOAD_DELAY = 6
 RANDOMIZE_DOWNLOAD_DELAY = True
 
 # Enable or disable spider middlewares
@@ -59,7 +59,7 @@ HTTPCACHE_ENABLED = True
 
 # https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    "metaevents.pipelines.MongoDbPipeline": 200,
+   "metaevents.pipelines.MongoDbPipeline": 200,
 }
 
 # Set log level for all spiders
