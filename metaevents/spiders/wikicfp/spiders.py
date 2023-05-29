@@ -53,18 +53,17 @@ class WikiCfpSpider(scrapy.Spider):
                 cb_kwargs={'event_id': event_id,
                            'event_main_category': category_name, },
             )
-            break
 
-        # next_page = response.css(CATEGORY_NEXT_PAGE_SELECTOR).get()
-        # if next_page is not None:
-        #     next_url = response.urljoin(next_page)
-        #     if next_url not in self.seen_page_urls:
-        #         self.seen_page_urls.add(next_url)
-        #         yield response.follow(next_url, callback=self.parse_category)
-        #     else:
-        #         logging.info('🏁 {} (skipping, seen)'.format(response.url))
-        # else:
-        #     logging.info('🏁 {} (done)'.format(category_name))
+        next_page = response.css(CATEGORY_NEXT_PAGE_SELECTOR).get()
+        if next_page is not None:
+            next_url = response.urljoin(next_page)
+            if next_url not in self.seen_page_urls:
+                self.seen_page_urls.add(next_url)
+                yield response.follow(next_url, callback=self.parse_category)
+            else:
+                logging.info('🏁 {} (skipping, seen)'.format(response.url))
+        else:
+            logging.info('🏁 {} (done)'.format(category_name))
 
     def parse_event(self, response, event_id, event_main_category):
         event = WikiCfpEventItemLoader(WikiCfpEventItem(), response)
@@ -83,10 +82,10 @@ class WikiCfpSpider(scrapy.Spider):
             category_url = selector.css('::attr("href")').get()
             event_categories.add(category_name)
 
-            # if category_name not in self.seen_category_names:
-            #     self.seen_category_names.add(category_name)
-            #     logging.info('🐢 {} (enqueued)'.format(category_name))
-            #     yield response.follow(category_url, callback=self.parse_category)
+            if category_name not in self.seen_category_names:
+                self.seen_category_names.add(category_name)
+                logging.info('🐢 {} (enqueued)'.format(category_name))
+                yield response.follow(category_url, callback=self.parse_category)
         event.add_value('categories', list(event_categories))
 
         event_metadata = dict()
